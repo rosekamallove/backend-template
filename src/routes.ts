@@ -1,16 +1,14 @@
 import { Express, Request, Response } from "express";
 import validateRequest from "./middleware/validateRequest";
 import { createUserHandler } from "./controller/user.controller";
-import {
-  createUserSchema,
-  createUserSessionSchema,
-} from "./schema/user.schema";
+import { createUserSchema } from "./schema/user.schema";
 import {
   createUserSessionHandler,
   getUserSessionsHandler,
   invalidateUserSessionHandler,
 } from "./controller/session.controller";
 import requiresUser from "./middleware/requireUser";
+import { createSessionSchema } from "./schema/session.schema";
 
 export default function (app: Express) {
   app.get("/healthcheck", (_req: Request, res: Response) => {
@@ -25,7 +23,7 @@ export default function (app: Express) {
 
   app.post(
     "/api/v1/sessions",
-    validateRequest(createUserSessionSchema),
+    validateRequest(createSessionSchema),
     createUserSessionHandler
   );
 

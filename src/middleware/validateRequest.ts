@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { AnySchema } from "yup";
+import { AnyZodObject } from "zod";
 import log from "../logger";
 
 const validate =
-  (schema: AnySchema) =>
+  (schema: AnyZodObject) =>
   async (req: Request, res: Response, next: NextFunction) => {
     // `Carrying` from Functional Programming
     try {
-      await schema.validate({
+      schema.parse({
         body: req.body,
         query: req.query,
         params: req.params,
