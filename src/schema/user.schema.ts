@@ -9,8 +9,8 @@ export const createUserSchema = object({
     password: string({
       required_error: "Name is required",
     }).regex(
-      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-      "Password (> 8 chars): uppercase, lowercase and special characthers"
+      /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+      "Enter an 8 letter password, with at least a symbol, upper and lower case letters and a number"
     ),
 
     passwordConfirmation: string().min(1, "Please confirm passwords"),
