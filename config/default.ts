@@ -5,6 +5,7 @@ export default {
   saltWorkFactor: 10,
   accessTokenTtl: "15m",
   refreshTokenTtl: "1y",
+  origin: "http://localhost:3000",
   privateKey: `-----BEGIN RSA PRIVATE KEY-----
 MIICWwIBAAKBgQCZfrvq4fOshOX4C6NlTPgaSw98n/p8sj8tzYtMmuV/gYkdeiOA
 jzY+tb3JV2aQLKXts3I7akP3BgMf03HsAWYnBk0V+EuCG2haSNwcyj2x/uvsbeyq
