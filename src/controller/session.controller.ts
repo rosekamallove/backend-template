@@ -43,7 +43,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     secure: false, // set true in Prod (https)
   });
 
-  res.send({ accessToken, refreshToken });
+  res.send({ accessToken, refreshToken, user });
 }
 
 export async function invalidateUserSessionHandler(

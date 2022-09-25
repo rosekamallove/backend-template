@@ -19,6 +19,7 @@ export function verifyJwt(token: string) {
       decoded: null,
     };
   }
+
   try {
     const decoded = jwt.verify(token, publicKey);
     return {
