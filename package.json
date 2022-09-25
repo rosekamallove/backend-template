@@ -9,6 +9,9 @@
   "scripts": {
     "dev": "nodemon --config nodemon.json src/app.ts"
   },
+  "engines": {
+    "node": "14.x"
+  },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/body-parser": "^1.19.2",
