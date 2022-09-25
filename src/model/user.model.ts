@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import config from "config";
+import mongoose from "mongoose";
+import { EventDocument } from "./events.model";
 
 export interface UserDocument extends mongoose.Document {
   email: string;
@@ -9,6 +10,8 @@ export interface UserDocument extends mongoose.Document {
   password: string;
   createdAt: Date;
   updatedAt: Date;
+  isCreator: boolean;
+  events: Array<EventDocument>;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -31,6 +34,16 @@ const UserSchema = new mongoose.Schema<UserDocument>(
       type: String,
       required: true,
     },
+    isCreator: {
+      type: Boolean,
+      default: true,
+    },
+    events: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Event",
+      },
+    ],
   },
   { timestamps: true }
 );
