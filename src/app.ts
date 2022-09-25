@@ -3,9 +3,9 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import connect from "./db/connect";
-import log from "./logger";
 import deserializeUser from "./middleware/deserializeUser";
 import routes from "./routes";
+import log from "./utils/logger";
 
 const port = config.get("port") as number;
 const host = config.get("host") as string;

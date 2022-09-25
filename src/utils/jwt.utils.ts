@@ -1,7 +1,8 @@
-import jwt from "jsonwebtoken";
 import config from "config";
+import jwt from "jsonwebtoken";
 
-const privateKey = config.get("privateKey") as string;
+const privateKey = config.get<string>("privateKey") as string;
+const publicKey = config.get<string>("publicKey") as string;
 
 export function sign(object: Object, options?: jwt.SignOptions | undefined) {
   return jwt.sign(object, privateKey, options);
@@ -9,13 +10,18 @@ export function sign(object: Object, options?: jwt.SignOptions | undefined) {
 
 export function decode(token: string) {
   try {
-    const decoded = jwt.verify(token, privateKey);
-
-    return { valid: true, expired: false, decoded };
-  } catch (error: any) {
+    console.log(token);
+    const decoded = jwt.verify(token, publicKey);
+    return {
+      valid: true,
+      expired: false,
+      decoded,
+    };
+  } catch (e: any) {
+    console.error(e);
     return {
       valid: false,
-      expired: error.message === "jwt expired",
+      expired: e.message === "jwt expired",
       decoded: null,
     };
   }
