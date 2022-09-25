@@ -3,7 +3,7 @@ import { get } from "lodash";
 import { FilterQuery, LeanDocument, UpdateQuery } from "mongoose";
 import Session, { SessionDocument } from "../model/session.model";
 import { UserDocument } from "../model/user.model";
-import { decode, sign } from "../utils/jwt.utils";
+import { signJwt, verifyJwt } from "../utils/jwt.utils";
 import { findUser } from "./user.service";
 
 export async function createSession(userId: string, userAgent: string) {
@@ -25,7 +25,7 @@ export function createAccessToken({
     | Omit<SessionDocument, "password">
     | LeanDocument<Omit<SessionDocument, "password">>;
 }) {
-  const accessToken = sign(
+  const accessToken = signJwt(
     { ...user, session: session._id },
     { expiresIn: config.get("accessTokenTtl") }
   );
@@ -38,7 +38,7 @@ export async function reIssueAccessToken({
 }: {
   refreshToken: string;
 }) {
-  const { decoded } = decode(refreshToken);
+  const { decoded } = verifyJwt(refreshToken);
   if (!decoded || !get(decoded, "_id")) return false;
 
   const session = await Session.findById(get(decoded, "_id"));

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { get } from "lodash";
 import { reIssueAccessToken } from "../service/session.service";
-import { decode } from "../utils/jwt.utils";
+import { verifyJwt } from "../utils/jwt.utils";
 
 const deserializeUser = async (
   req: Request,
@@ -17,7 +17,7 @@ const deserializeUser = async (
 
   if (!accessToken) return next();
 
-  const { decoded, expired } = decode(accessToken);
+  const { decoded, expired } = verifyJwt(accessToken);
 
   if (decoded) {
     // @ts-ignore
@@ -42,7 +42,7 @@ const deserializeUser = async (
         secure: false, // set true in Prod (https)
       });
 
-      const { decoded } = decode(newAccessToken);
+      const { decoded } = verifyJwt(newAccessToken);
 
       // @ts-ignore
       req.user = decoded;

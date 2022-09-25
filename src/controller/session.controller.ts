@@ -8,7 +8,7 @@ import {
   updateSession,
 } from "../service/session.service";
 import { validatePassword } from "../service/user.service";
-import { sign } from "../utils/jwt.utils";
+import { signJwt } from "../utils/jwt.utils";
 
 export async function createUserSessionHandler(req: Request, res: Response) {
   const user = await validatePassword(req.body);
@@ -21,7 +21,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     session,
   });
 
-  const refreshToken = sign(session, {
+  const refreshToken = signJwt(session, {
     expiresIn: config.get("refreshTokenTtl"),
   });
 
