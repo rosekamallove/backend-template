@@ -1,5 +1,5 @@
+import { NextFunction, Request, Response } from "express";
 import { get } from "lodash";
-import { Request, Response, NextFunction } from "express";
 
 const requiresUser = async (
   req: Request,
