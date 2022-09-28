@@ -21,7 +21,7 @@ const deserializeUser = async (
 
   if (decoded) {
     // @ts-ignore
-    req.user = decoded;
+    res.locals.user = decoded;
 
     return next();
   }
@@ -45,7 +45,7 @@ const deserializeUser = async (
       const { decoded } = verifyJwt(newAccessToken);
 
       // @ts-ignore
-      req.user = decoded;
+      res.locals.user = decoded;
     }
 
     return next();

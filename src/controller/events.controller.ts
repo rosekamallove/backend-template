@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import EventModel from "../model/events.model";
 import { CreateEventInput, UpdateEventInput } from "../schema/events.schema";
 import {
   createEvent,
@@ -58,6 +59,21 @@ export async function getEventHandler(
   }
 
   return res.send(event);
+}
+
+export async function getAllEventsHandler(
+  req: Request<UpdateEventInput["params"]>,
+  res: Response
+) {
+  const user = res.locals.user;
+
+  if (!user) {
+    return res.sendStatus(404);
+  }
+
+  const events = await EventModel.find({ user: user._id });
+
+  return res.send({ data: events });
 }
 
 export async function deleteEventHandler(

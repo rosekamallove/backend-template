@@ -2,6 +2,7 @@ import { Express, Request, Response } from "express";
 import {
   createEventHandler,
   deleteEventHandler,
+  getAllEventsHandler,
   getEventHandler,
   updateEventHandler,
 } from "./controller/events.controller";
@@ -49,25 +50,27 @@ export default function (app: Express) {
   app.delete("/api/v1/sessions", requiresUser, invalidateUserSessionHandler);
 
   app.post(
-    "/api/events",
+    "/api/v1/events",
     [requiresUser, validateResource(createEventSchema)],
     createEventHandler
   );
 
   app.put(
-    "/api/events/:eventId",
+    "/api/v1/events/:eventId",
     [requireUser, validateResource(updateEventSchema)],
     updateEventHandler
   );
 
+  app.get("/api/v1/events", requireUser, getAllEventsHandler);
+
   app.get(
-    "/api/events/:eventId",
+    "/api/v1/events/:eventId",
     validateResource(getEventSchema),
     getEventHandler
   );
 
   app.delete(
-    "/api/events/:eventId",
+    "/api/v1/events/:eventId",
     [requireUser, validateResource(deleteEventSchema)],
     deleteEventHandler
   );
